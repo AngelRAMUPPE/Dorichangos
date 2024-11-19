@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmación de Pedido - Restaurant</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="shortcut icon" href="images/Dorichangos-logo.png" type="image/x-icon">
+</head>
+<body>
+    <div class="confirmation-container">
+        <div class="confirmation-card">
+            <div id="successIcon" class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            
+            <h1>¡Gracias por tu pedido!</h1>
+            <p>Tu número de orden es: <strong id="orderId"></strong></p>
+            
+            <div class="order-details">
+                <h2>Detalles del Pedido</h2>
+                <div id="orderStatus" class="order-status">
+                    <!-- El estado se insertará aquí -->
+                </div>
+                
+                <div id="orderItems" class="order-items">
+                    <!-- Los elementos se insertarán aquí -->
+                </div>
+                
+                <div class="order-total">
+                    <h3>Total: $<span id="orderTotal">0.00</span></h3>
+                </div>
+                
+                <div id="customerInfo" class="customer-info">
+                    <!-- La información del cliente se insertará aquí -->
+                </div>
+            </div>
+            
+            <div class="confirmation-actions">
+                <a href="/" class="button">Volver al Inicio</a>
+                <button onclick="window.print()" class="button secondary">
+                    <i class="fas fa-print"></i> Imprimir Recibo
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="confirmation.js"></script>
+</body>
+</html> 

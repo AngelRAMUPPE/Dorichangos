@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dorichangos - Tradición y Sabor</title>
+    <link rel="shortcut icon" href="images/Dorichangos-logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">
+                <img src="/images/Dorichangos-logo.png" alt="Logo Restaurante" class="logo-img">
+            </div>
+            <div class="nav-links">
+                <a href="#menu">Menú</a>
+                <a href="#eventos">Eventos</a>
+                <a href="#contacto">Contacto</a>
+            </div>
+            <div class="login">
+                <a href="/auth/login"><img src="/images/layout.png" alt="Login" width="24" height="24"></a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>¡TRADICIÓN Y SABOR<br>EN CADA MORDIDA!</h1>
+                <p>Déjate sorprender por nuestros sabores...</p>
+                <a href="#menu" class="btn-primary">VER MENÚ</a>
+            </div>
+        </section>
+
+        <section id="eventos" class="eventos">
+            <center>
+                <h2>Eventos</h2>
+                <p>¡Algo grande está por llegar... y tú no puedes faltar!</p>
+            </center> <br>
+            <div class="carousel">
+                <div class="carousel-inner">
+                    <!-- Las imágenes se insertarán aquí -->
+                </div>
+                <div class="carousel-controls">
+                    <button class="carousel-control prev">&lt;</button>
+                    <button class="carousel-control next">&gt;</button>
+                </div>
+                <div class="carousel-indicators">
+                    <!-- Los indicadores se insertarán aquí -->
+                </div>
+            </div>
+        </section>
+
+        <section id="Dividor" class="Dividor1">
+            <center>
+                <img src="images/Dividor.png" alt="">
+            </center>
+        </section>
+
+        <section id="menu" class="menu">
+            <div class="titulo">
+                <center>
+                    <p1>Comida de calidad para ti</p1>
+                    <h2>Nuestras Especialidades</h2>
+                    <p>Comida auténtica de nuestro restaurante.</p>
+                </center>
+            </div>
+            <div class="menu-filters">
+                <button class="filter-btn active" id="salado">Salado</button>
+                <button class="filter-btn" id="paquetes">Paquetes</button>
+                <button class="filter-btn" id="bebidas">Bebidas</button>
+                <button class="filter-btn" id="agridulce">Agridulce</button>
+            </div>
+            <div class="menu-grid">
+                <!-- Los elementos del menú se insertarán aquí -->
+            </div>
+            <div id="cart" class="cart">
+                <div class="cart-header">
+                  <h3>Carrito de Compra</h3>
+                  <button id="closeCart" class="close-cart">&times;</button>
+                </div>
+                <div id="cartItems" class="cart-items">
+                  <!-- Los elementos del carrito se agregarán aquí -->
+                </div>
+                <div class="cart-footer">
+                  <div class="cart-total">
+                    Total: $<span id="cartTotal">0.00</span>
+                  </div>
+                  <button id="checkoutBtn" class="checkout-btn">Realizar Pedido</button>
+                </div>
+              </div>
+              
+              <button id="cartBtn" class="cart-btn">
+                <img src="/images/shopping-cart.png" alt="Cart" width="24" height="24">
+                <span id="cartCount" class="cart-count">0</span>
+              </button>
+        </section>
+
+        <section id="catering" class="catering">
+            <center>
+                <h2 class="catering-title">Catering</h2>
+                <p class="catering-description">Ofrecemos eventos gastronómicos para tu día especial <br> con tu gente importante</p>
+            </center>
+            <div class="catering-container">
+                <!-- Los elementos de catering se cargarán aquí -->
+            </div>
+        </section>
+
+        
+        <section id="Dividor1" class="Dividor1">
+            <center>
+                <img src="images/Dividor2.png" alt="">
+            </center>
+        </section>
+
+        <section id="historia" class="historia">
+            <center>
+                <p1>Comida de calidad para ti</p1>
+                <h2>Nuestras Especialidades</h2>
+                <p>Comida auténtica de nuestro restaurante.</p>
+            </center> <br>
+            <div class="historia-content">
+                <div class="historia-images">
+                    <img 
+                        src="/images/Hist1.png" 
+                        alt="Chef preparing ingredients in kitchen"
+                        loading="lazy"
+                    />
+                    <img 
+                        src="/images/Hist2.png" 
+                        alt="Chef preparing food on cutting board"
+                        loading="lazy"
+                    />
+                    <img 
+                        src="/images/Hist3.png" 
+                        alt="Chef cooking with flames"
+                        loading="lazy"
+                    />
+                </div>
+                <div class="historia-text">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer feugiat urna id leo euismod rhoncus. Aliquam erat volutpat. Nulla id aliquam neque, at dignissim quam. Praesent et lacus accumsan, consequat nisl a, mattis sapien.
+                    </p>
+                    <p>
+                        Nam sodales ullamcorper aliquet. Phasellus ut pretium libero, vitae imperdiet purus. Sed sed tincidunt velit. Aliquam vitae ipsum molestie, vehicula nisi quis, finibus leo.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <section id="comentarios" class="comentarios">
+            <center>
+                <h2>Comentarios</h2>
+                <p>¡Queremos saber lo que piensas de nosotros!</p>
+            </center>
+            <div class="comentarios-form">
+                <form id="commentForm">
+                    <textarea 
+                        id="commentContent" 
+                        placeholder="Express tu opinión (mínimo 5 caracteres)" 
+                        maxlength="500"
+                        required
+                    ></textarea>
+                    <div class="char-counter">0/500</div>
+                    <button type="submit" class="btn-primary">ENVIAR</button>
+                </form>
+                <div id="commentStatus" class="comment-status"></div>
+            </div>
+        </section>
+        
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <h2 class="footer-heading">
+                ¡HASTA PRONTO! NO DUDES EN CONTACTARNOS SI NECESITAS ALGO.
+            </h2>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <img src="/images/map-pin.png" alt="Vector" width="24" height="24">
+                    <div>
+                        <div>Arteaga #110 36900</div>
+                        <div>Pénjamo, Guanajuato, Mexico</div>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <img src="/images/vector.svg" alt="Vector" width="24" height="24">
+                    <div>
+                        <div>Llamanos:</div>
+                        <div>469-126-5669</div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="footer-logo">
+                <img src="/images/Dorichangos-logo.png" alt="Dorichangos Logo" />
+            </div>
+    
+            <div class="social-links">
+                <a href="#" class="social-link">Whatsapp</a>
+                <a href="#" class="social-link">Twitter</a>
+                <a href="#" class="social-link">Facebook</a>
+            </div>
+        </div>
+    </footer>
+    <script src="/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control Admin- Dorichangos</title>
+    <link rel="shortcut icon" href="/images/Dorichangos-logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="/admin.css">   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <a href="/">
+                <img src="/images/Dorichangos-logo.png" alt="Dorichangos Logo" class="logo">
+            </a>
+            <h1>Panel de control</h1>
+        </div>
+        <div class="header-buttons">
+            <button class="btn btn-secondary" id="publishChanges">Publicar cambios</button>
+            <button class="btn btn-success" id="addUserBtn">Agregar usuarios</button>
+            <button class="btn btn-primary" onclick="location.href='/auth/logout'">Cerrar Sesión</button>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Agregar esto donde quieras que aparezca la sección de pedidos -->
+        <div class="section">
+            <div id="ordersContainer">
+                <!-- Los pedidos se cargarán aquí -->
+            </div>
+        </div>
+        <section class="section" id="events-section">
+            <h2 class="section-title">Seccion de Eventos</h2>
+            <div class="events-grid">
+                
+            </div>
+            
+            <div class="upload-buttons">
+                <input type="file" id="event-image" hidden accept="image/*">
+                <button class="btn btn-primary" onclick="document.getElementById('event-image').click()">
+                    Subir imagen
+                </button>
+                <button class="btn btn-success" onclick="saveEvents()">Guardar</button>
+            </div>
+
+        </section>
+
+        <section class="section" id="menu-section">
+            <div class="section-header">
+                <h2 class="section-title">Seccion de Especialidades</h2>
+                <button class="add-icon-btn" id="addMenuBtn2" title="Agregar Especialidad">
+                    <img src="/images/add.png" alt="Agregar Especialidad" class="add-icon" height="40px" width="40px">
+                </button>
+            </div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-type="salado">Salado</button>
+                <button class="filter-btn" data-type="paquetes">Paquetes</button>
+                <button class="filter-btn" data-type="bebida">Bebidas</button>
+                <button class="filter-btn" data-type="agridulce">Agridulce</button>
+            </div>
+            <div class="menu-items" id="menuItemsContainer">
+                
+            </div>
+        </section>
+
+        <section class="section" id="catering-section">
+            <div class="section-header">
+                <h2 class="section-title">Seccion de Catering</h2>
+                <button class="add-icon-btn" id="addCateringBtn" title="Agregar Nuevo Item">
+                    <img src="/images/add.png" alt="Agregar Nuevo Item" class="add-icon" height="40px" width="40px">
+                </button>
+            </div>
+            <div class="catering-items" id="cateringContainer">
+                <!-- Los elementos de catering se cargarán aquí -->
+            </div>
+        </section>
+        <section class="section" id="comments-section">
+            <h2 class="section-title">Comentarios Pendientes</h2>
+            <div class="comments-container">
+                <!-- Los comentarios se cargarán aquí -->
+            </div>
+        </section>
+
+    </main>
+    <div id="newUserModal" class="modal">
+        <div class="modal-content">
+            <h2>Agregar Nuevo Usuario</h2>
+            <form id="newUserForm">
+                <div class="form-group">
+                    <label for="newUsername">Usuario:</label>
+                    <input type="text" id="newUsername" name="username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="newPassword">Contraseña:</label>
+                    <input type="password" id="newPassword" name="password" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="newRole">Rol:</label>
+                    <select id="newRole" name="role" required>
+                        <option value="trabajador">Trabajador</option>
+                        <option value="admin">Administrador</option>
+                    </select>
+                </div>
+    
+                <div class="modal-buttons">
+                    <button type="submit" class="btn btn-success">Crear Usuario</button>
+                    <button type="button" class="btn btn-secondary" id="cancelNewUser">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Modal para confirmar eliminación -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <h2>Confirmar Eliminación</h2>
+            <p>¿Estás seguro que deseas eliminar este elemento del menú?</p>
+            <div class="modal-buttons">
+                <button class="btn btn-danger" id="confirmDelete">Eliminar</button>
+                <button class="btn btn-secondary" id="cancelDelete">Cancelar</button>
+            </div>
+        </div>
+    </div>
+    <!-- Modal para agregar productos -->
+    <div id="menuModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Agregar Nuevo Producto al Menú</h2>
+            <form id="menuForm" enctype="multipart/form-data" class="menu-form">
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="precio">Precio:</label>
+                    <input type="number" id="precio" name="precio" step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="ingredientes">Ingredientes (separados por comas):</label>
+                    <textarea id="ingredientes" name="ingredientes" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="foto">Foto:</label>
+                    <input type="file" id="foto" name="foto" accept="image/*" required>
+                    <div id="preview"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="tipo">Tipo:</label>
+                    <select id="tipo" name="tipo" required>
+                        <option value="salado">Salado</option>
+                        <option value="paquetes">Paquetes</option>
+                        <option value="bebidas">Bebidas</option>
+                        <option value="agridulce">Agridulce</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="submit-button">Agregar al Menú</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para modificar productos -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <h2>Modificar Elemento del Menú</h2>
+            <form id="editMenuForm">
+                <div class="form-group">
+                    <label for="editNombre">Nombre:</label>
+                    <input type="text" id="editNombre" name="nombre" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editIngredientes">Ingredientes (separados por coma):</label>
+                    <input type="text" id="editIngredientes" name="ingredientes">
+                </div>
+                
+                <div class="form-group">
+                    <label for="editPrecio">Precio:</label>
+                    <input type="number" id="editPrecio" name="precio" step="0.01" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editTipo">Tipo:</label>
+                    <select id="editTipo" name="tipo" required>
+                        <option value="salado">Salado</option>
+                        <option value="paquetes">Paquetes</option>
+                        <option value="bebidas">Bebidas</option>
+                        <option value="agridulce">Agridulce</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editFoto">Nueva Foto (opcional):</label>
+                    <input type="file" id="editFoto" name="foto" accept="image/*">
+                </div>
+
+                <div class="modal-buttons">
+                    <button type="submit" class="btn btn-success">Guardar Cambios</button>
+                    <button type="button" class="btn btn-secondary" id="cancelEdit">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Modal para crear nuevos elementos de catering -->
+<div id="newCateringModal" class="modal">
+    <div class="modal-content">
+        <h2>Agregar Nuevo Item de Catering</h2>
+        <form id="newCateringForm">
+            <div class="form-group">
+                <label for="newCateringNombre">Nombre:</label>
+                <input type="text" id="newCateringNombre" name="nombre" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="newCateringDescripcion">Descripción:</label>
+                <textarea id="newCateringDescripcion" name="descripcion" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="newCateringPrecio">Precio:</label>
+                <input type="number" id="newCateringPrecio" name="precio" step="0.01" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="newCateringFoto">Foto:</label>
+                <input type="file" id="newCateringFoto" name="foto" accept="image/*" required>
+            </div>
+
+            <div class="modal-buttons">
+                <button type="submit" class="btn btn-success">Crear Item</button>
+                <button type="button" class="btn btn-secondary" id="cancelNewCatering">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+    <!-- Modal para editar elementos de catering -->
+<div id="editCateringModal" class="modal">
+    <div class="modal-content">
+        <h2>Modificar Elemento de Catering</h2>
+        <form id="editCateringForm">
+            <div class="form-group">
+                <label for="editCateringNombre">Nombre:</label>
+                <input type="text" id="editCateringNombre" name="nombre" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="editCateringDescripcion">Descripción:</label>
+                <textarea id="editCateringDescripcion" name="descripcion" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="editCateringPrecio">Precio:</label>
+                <input type="number" id="editCateringPrecio" name="precio" step="0.01" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="editCateringFoto">Nueva Foto (opcional):</label>
+                <input type="file" id="editCateringFoto" name="foto" accept="image/*">
+            </div>
+
+            <div class="modal-buttons">
+                <button type="submit" class="btn btn-success">Guardar Cambios</button>
+                <button type="button" class="btn btn-secondary" id="cancelCateringEdit">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+    <!-- Modal para eliminar elementos de catering -->
+    <div id="deleteCateringModal" class="modal">
+        <div class="modal-content">
+        <h2>Confirmar Eliminación</h2>
+        <p>¿Estás seguro que deseas eliminar este elemento de catering?</p>
+        <div class="modal-buttons">
+            <button class="btn btn-danger" id="confirmCateringDelete">Eliminar</button>
+            <button class="btn btn-secondary" id="cancelCateringDelete">Cancelar</button>
+        </div>
+        </div>
+    </div>
+    <!-- Modal para eliminar eventos -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+          <span class="close-modal">&times;</span>
+          <h3>Confirmar eliminación</h3>
+          <p>¿Estás seguro que deseas eliminar esta imagen?</p>
+          <div class="modal-buttons">
+            <button class="btn btn-secondary close-modal">Cancelar</button>
+            <button class="btn btn-success" id="confirmDelete">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    <script src="/admin.js"></script>
+
+</body>
+</html>

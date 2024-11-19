@@ -1,0 +1,244 @@
+:root {
+    --primary-color: #FFD700;
+    --text-color: #FFFFFF;
+    --background-color: #1A1A1A;
+    --accent-color: #2C2C2C;
+    --error-color: #ff4444;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+        url('/images/bg-hero.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.login-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-width: 1000px;
+    width: 90%;
+    background: transparent;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.logo {
+    width: 407px;
+    height: 367px;
+    filter: drop-shadow(0 0 10px var(--neon-pink));
+}
+
+.form-section {
+    padding: 3rem;
+    background: var(--accent-color);
+}
+
+.login-form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+h1 {
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #6A6A6A;
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #6A6A6A;
+}
+
+.form-group i {
+    position: absolute;
+    right: 10px;
+    top: 40px;
+    color: var(--primary-color);
+}
+
+.login-button {
+    width: 100%;
+    padding: 1rem;
+    background: #F5BE32;
+    border: none;
+    border-radius: 50px;
+    color: var(--background-color);
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    margin-top: 2rem;
+}
+
+.login-button:hover {
+    transform: translateY(-2px);
+}
+
+.error-message {
+    color: var(--error-color);
+    text-align: center;
+    margin-top: 1rem;
+    display: none;
+}
+.form-group img {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    top: 5px;
+}
+
+@media (max-width: 768px) {
+    .login-container {
+        grid-template-columns: 1fr;
+    }
+
+    .logo-section {
+        padding: 2rem;
+    }
+
+    .logo {
+        width: 180px;
+        height: 180px;
+    }
+
+    .form-section {
+        padding: 2rem;
+    }
+}
+ /* Estilos del modal */
+ .modal {
+    display: none;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 15px 20px;
+    z-index: 1000;
+    animation: slideIn 0.3s ease-out;
+    border-left: 4px solid;
+}
+
+.modal.error {
+    border-left-color: #ff4444;
+    background-color: #fff5f5;
+}
+
+.modal.warning {
+    border-left-color: #ffbb33;
+    background-color: #fff9e6;
+}
+
+.modal.success {
+    border-left-color: #00C851;
+    background-color: #f4fff4;
+}
+
+.modal-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.modal-message {
+    color: #333;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.modal-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    cursor: pointer;
+    color: #666;
+    font-size: 18px;
+    background: none;
+    border: none;
+    padding: 4px;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+.register-link, .login-link {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.register-link a, .login-link a {
+    color: #F3D382;
+    text-decoration: none;
+}
+
+.register-link a:hover, .login-link a:hover {
+    text-decoration: underline;
+}
