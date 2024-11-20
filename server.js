@@ -1,5 +1,6 @@
 import express from 'express'
 import session from 'express-session'
+import path from 'path'
 import { fileURLToPath } from 'url'
 import connectDB from './config/database.js'
 import authRoutes from './routes/auth.js'
@@ -16,11 +17,13 @@ import paymentsRoutes from './routes/payments.js'
 const app = express()
 const port = process.env.PORT || 3000
 
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
 // Conectar a MongoDB
 connectDB()
 
 // Middleware
-app.use(express.static('public'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
@@ -30,10 +33,11 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: 'production' === 'production',
+    secure: process.env.NODE_ENV === 'production',
     maxAge: 24 * 60 * 60 * 1000 // 24 hours
   }
 }))
+
 
 // Routes
 app.use('/auth', authRoutes)
@@ -47,6 +51,9 @@ app.use('/comments', commentsRoutes)
 app.use('/orders', ordersRoutes)
 app.use('/payments', paymentsRoutes)
 
+
+app.use(express.static('public'))
+
 // Middleware para manejo de errores
 app.use((err, req, res, next) => {
   console.error(err.stack)
@@ -57,3 +64,7 @@ app.use((err, req, res, next) => {
 app.use((req, res) => {
   res.status(404).redirect('/?error=page_not_found')
 })
+
+app.listen(port, () => {
+  console.log(`Servidor corriendo en http://localhost:${port}`)
+}) 

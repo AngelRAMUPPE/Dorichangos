@@ -1,4 +1,3 @@
-import env from '../config/env.js'
 // Recuperar datos del carrito desde localStorage
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
@@ -29,7 +28,7 @@ let elements;
 
 // Inicializar Stripe
 async function initializeStripe() {
-    stripe = Stripe(env.stripe.publishableKey); // Reemplazar con tu clave pública de Stripe
+    stripe = Stripe('pk_test_51QMOe3L5PMOTNsM4Tt8vGKG7D3QtmpTOjVox2kzZxXL4f0DF9JtkCFFEquN38lCnNyWQ1VPpN2afpufTkGcIJOCf00zhEVPvnd'); // Reemplazar con tu clave pública de Stripe
     elements = stripe.elements();
     
     const cardElement = elements.create('card');

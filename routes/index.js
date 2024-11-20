@@ -1,14 +1,17 @@
 import express from 'express'
-import path from 'path'
 import { requireAuth } from '../middleware/auth.js'
 import { ProdMenu, ProdEvent, ProdCatering } from '../config/productionDatabase.js'
-
+import path from 'path'
+import { fileURLToPath } from 'url'
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 const router = express.Router()
 
-router.get('/', requireAuth, (req, res) => {
+router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public', 'index.html'))
 })
+
 router.get('/production/menu', async (req, res) => {
   try {
     const menuItems = await ProdMenu.find()
