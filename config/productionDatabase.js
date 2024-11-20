@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import env from './env.js'
-const prodConnection = mongoose.createConnection(env.mongodb.prod.uri, {
+const prodConnection = mongoose.createConnection(env.mongodb.prodUri, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })

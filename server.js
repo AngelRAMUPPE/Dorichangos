@@ -12,7 +12,6 @@ import panelControlRoutes from './routes/panelControl.js'
 import commentsRoutes from './routes/comments.js'
 import ordersRoutes from './routes/orders.js'
 import paymentsRoutes from './routes/payments.js'
-import env from './env.js'
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -31,7 +30,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: env.NODE.ENV === 'production',
+    secure: 'production' === 'production',
     maxAge: 24 * 60 * 60 * 1000 // 24 hours
   }
 }))

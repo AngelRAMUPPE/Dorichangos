@@ -8,8 +8,7 @@ const requiredEnvVars = [
   'STRIPE_SECRET_KEY',
   'STRIPE_PUBLISHABLE_KEY',
   'EMAIL_USER',
-  'EMAIL_PASS',
-  'NODE_ENV'
+  'EMAIL_PASS'
 ];
 
 requiredEnvVars.forEach(envVar => {
