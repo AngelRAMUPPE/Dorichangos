@@ -8,7 +8,7 @@ export const requireAuth = (req, res, next) => {
 export const requireAdmin = (req, res, next) => {
   if (!req.session.user || req.session.user.role !== 'admin') {
     req.session.destroy()
-    return res.status(403).json({ error: 'Admin access required' })
+    return res.redirect('/auth/login?error=unauthorized')
   }
   next()
 }
