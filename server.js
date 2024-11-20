@@ -31,7 +31,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: env.NODE_ENV === 'production',
+    secure: env.NODE.ENV === 'production',
     maxAge: 24 * 60 * 60 * 1000 // 24 hours
   }
 }))
@@ -58,7 +58,3 @@ app.use((err, req, res, next) => {
 app.use((req, res) => {
   res.status(404).redirect('/?error=page_not_found')
 })
-
-app.listen(port, () => {
-  console.log(`Servidor corriendo en http://localhost:${port}`)
-}) 
