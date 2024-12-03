@@ -1,3 +1,8 @@
+let pendingComment = '';
+const modal = document.getElementById('emailModal');
+const closeBtn = document.querySelector('.close');
+const emailVerificationForm = document.getElementById('emailVerificationForm');
+const emailVerificationStatus = document.getElementById('emailVerificationStatus');
 
 // Función auxiliar para convertir array buffer a base64
 function arrayBufferToBase64(buffer) {
@@ -163,7 +168,6 @@ async function loadCateringItems() {
   }
   
 
-// Add this to your existing DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', () => {
   loadMenuItems();
   loadCateringItems();
@@ -174,8 +178,33 @@ document.getElementById('commentForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   
   const content = document.getElementById('commentContent').value.trim();
+  if (!content) return;
+  
+  pendingComment = content;
+  modal.style.display = 'block';
+});
+
+// Cerrar modal cuando se haga clic en el X
+closeBtn.onclick = () => {
+  modal.style.display = 'none';
+  emailVerificationForm.reset();
+  emailVerificationStatus.innerHTML = '';
+};
+
+// Cerrar modal cuando se haga clic fuera
+window.onclick = (e) => {
+  if (e.target === modal) {
+      modal.style.display = 'none';
+      emailVerificationForm.reset();
+      emailVerificationStatus.innerHTML = '';
+  }
+};
+// Manejador de envío del formulario de verificación de correo electrónico
+emailVerificationForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
   const email = document.getElementById('commentEmail').value.trim();
-  const statusDiv = document.getElementById('commentStatus');
+  emailVerificationStatus.innerHTML = 'Enviando...';
   
   try {
       const response = await fetch('/comments/add', {
@@ -183,20 +212,42 @@ document.getElementById('commentForm').addEventListener('submit', async (e) => {
           headers: {
               'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ content, email })
+          body: JSON.stringify({ 
+              content: pendingComment, 
+              email: email 
+          })
       });
 
       const data = await response.json();
       
       if (response.ok) {
-          statusDiv.innerHTML = `<div class="success">${data.message}</div>`;
+          emailVerificationStatus.className = 'success';
+          emailVerificationStatus.innerHTML = data.message;
           document.getElementById('commentForm').reset();
+          
+          // Cerrar modal después de 3 segundos en éxito
+          setTimeout(() => {
+              modal.style.display = 'none';
+              emailVerificationForm.reset();
+              emailVerificationStatus.innerHTML = '';
+          }, 3000);
       } else {
-          statusDiv.innerHTML = `<div class="error">${data.error}</div>`;
+          emailVerificationStatus.className = 'error';
+          emailVerificationStatus.innerHTML = data.error;
       }
   } catch (error) {
       console.error('Error:', error);
-      statusDiv.innerHTML = '<div class="error">Error al enviar el comentario</div>';
+      emailVerificationStatus.className = 'error';
+      emailVerificationStatus.innerHTML = 'Error al enviar el comentario';
+  }
+});
+
+// agregar soporte de teclado para cerrar modal con la tecla Escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && modal.style.display === 'block') {
+      modal.style.display = 'none';
+      emailVerificationForm.reset();
+      emailVerificationStatus.innerHTML = '';
   }
 });
 

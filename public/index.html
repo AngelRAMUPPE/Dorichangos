@@ -162,18 +162,28 @@
                         maxlength="500"
                         required
                     ></textarea>
+                    <div class="char-counter">0/500</div>
+                    <button type="submit" class="btn-primary">ENVIAR</button>
+                </form>
+            </div>
+        </section>
+        <div id="emailModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3>Verificar Comentario</h3>
+                <p>Por favor ingresa tu correo electrónico para verificar tu comentario:</p>
+                <form id="emailVerificationForm">
                     <input 
                         type="email" 
                         id="commentEmail" 
                         placeholder="Tu correo electrónico" 
                         required
                     >
-                    <div class="char-counter">0/500</div>
-                    <button type="submit" class="btn-primary">ENVIAR</button>
+                    <button type="submit" class="btn-primary">Verificar</button>
                 </form>
-                <div id="commentStatus" class="comment-status"></div>
+                <div id="emailVerificationStatus"></div>
             </div>
-        </section>
+        </div>
         
     </main>
 

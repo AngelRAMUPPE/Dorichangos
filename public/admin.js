@@ -702,6 +702,7 @@ document.getElementById('publishChanges').addEventListener('click', async () => 
       container.innerHTML = comments.map(comment => `
           <div class="comment-card">
               <div class="comment-content">${comment.content}</div>
+              <div class="comment-email">Email: ${comment.email}</div>
               <div class="comment-date">Recibido: ${new Date(comment.createdAt).toLocaleString()}</div>
               <div class="comment-actions">
                   <button class="btn-reject" onclick="handleComment('${comment._id}', 'rejected')">Borrar</button>

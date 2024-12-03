@@ -100,7 +100,7 @@ router.get('/verify/:token', async (req, res) => {
       from: env.email.user,
       to: "angelram1@outlook.com",
       subject: 'Nuevo comentario verificado en Dorichangos',
-      text: `Nuevo comentario verificado:\n\n${comment.content}\n\nRevisa el panel de administración para aprobarlo o rechazarlo.`
+      text: `Nuevo comentario verificado:\n\n${comment.content}\n\nEmail: ${comment.email}\n\nRevisa el panel de administración para aprobarlo o rechazarlo.`
     };
 
     await transporter.sendMail(adminMailOptions);
