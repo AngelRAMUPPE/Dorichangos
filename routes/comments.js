@@ -52,7 +52,7 @@ router.post('/add', async (req, res) => {
     await comment.save();
 
     // Send verification email
-    const verificationUrl = `${env.baseUrl}/comments/verify/${verificationToken}`;
+    const verificationUrl = `https://dorichangos.onrender.com/comments/verify/${verificationToken}`;
     const mailOptions = {
       from: env.email.user,
       to: email,
