@@ -120,7 +120,6 @@ document.getElementById('checkoutForm').addEventListener('submit', async (e) => 
         name: document.getElementById('name').value,
         phone: document.getElementById('phone').value,
         email: document.getElementById('email').value,
-        address: document.getElementById('address').value,
         paymentMethod: document.querySelector('input[name="paymentMethod"]:checked').value,
         items: cart.map(item => ({
             menuItem: item._id,

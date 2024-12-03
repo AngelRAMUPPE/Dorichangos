@@ -171,33 +171,34 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 document.getElementById('commentForm').addEventListener('submit', async (e) => {
-    e.preventDefault()
-    
-    const content = document.getElementById('commentContent').value.trim()
-    const statusDiv = document.getElementById('commentStatus')
-    
-    try {
-        const response = await fetch('/comments/add', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ content })
-        })
+  e.preventDefault();
+  
+  const content = document.getElementById('commentContent').value.trim();
+  const email = document.getElementById('commentEmail').value.trim();
+  const statusDiv = document.getElementById('commentStatus');
+  
+  try {
+      const response = await fetch('/comments/add', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ content, email })
+      });
 
-        const data = await response.json()
-        
-        if (response.ok) {
-            statusDiv.innerHTML = `<div class="success">${data.message}</div>`
-            document.getElementById('commentForm').reset()
-        } else {
-            statusDiv.innerHTML = `<div class="error">${data.error}</div>`
-        }
-    } catch (error) {
-        console.error('Error:', error)
-        statusDiv.innerHTML = '<div class="error">Error al enviar el comentario</div>'
-    }
-})
+      const data = await response.json();
+      
+      if (response.ok) {
+          statusDiv.innerHTML = `<div class="success">${data.message}</div>`;
+          document.getElementById('commentForm').reset();
+      } else {
+          statusDiv.innerHTML = `<div class="error">${data.error}</div>`;
+      }
+  } catch (error) {
+      console.error('Error:', error);
+      statusDiv.innerHTML = '<div class="error">Error al enviar el comentario</div>';
+  }
+});
 
 // Contador de caracteres
 document.getElementById('commentContent').addEventListener('input', function() {

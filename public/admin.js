@@ -820,7 +820,6 @@ async function loadOrders() {
                         <div class="order-details">
                             <p><strong>Cliente:</strong> ${order.customerName}</p>
                             <p><strong>Teléfono:</strong> ${order.customerPhone}</p>
-                            <p><strong>Dirección:</strong> ${order.deliveryAddress}</p>
                             <p><strong>Total:</strong> $${order.total.toFixed(2)}</p>
                             <p><strong>Método de Pago:</strong> ${order.paymentMethod === 'card' ? 'Tarjeta' : 'Efectivo'}</p>
                         </div>
