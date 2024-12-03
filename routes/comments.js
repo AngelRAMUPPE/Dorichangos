@@ -75,41 +75,45 @@ router.post('/add', async (req, res) => {
     res.status(500).json({ error: 'Error al guardar el comentario' })
   }
 })
-// Add verification endpoint
+// Agregar endpoint de verificación
 router.get('/verify/:token', async (req, res) => {
   try {
     const { token } = req.params;
     
     const comment = await Comment.findOne({ 
       verificationToken: token,
-      status: 'unverified',
+      status: 'pending',
       createdAt: { $gt: new Date(Date.now() - 24 * 60 * 60 * 1000) }
     });
 
-    if (!comment) {
-      return res.status(400).send('Token inválido o expirado');
+    let redirectMessage;
+        if (!comment) {
+            redirectMessage = 'invalid';
+        } else {
+            comment.status = 'pending';
+            comment.verified = true;
+            comment.verificationToken = undefined;
+            await comment.save();
+
+            // Notify admin about new verified comment
+            const adminMailOptions = {
+                from: env.email.user,
+                to: "angelram1@outlook.com",
+                subject: 'Nuevo comentario verificado en Dorichangos',
+                text: `Nuevo comentario verificado:\n\n${comment.content}\n\nEmail: ${comment.email}\n\nRevisa el panel de administración para aprobarlo o rechazarlo.`
+            };
+
+            await transporter.sendMail(adminMailOptions);
+            redirectMessage = 'success';
+        }
+
+        // Redirect to index with status
+        res.redirect(`/?verificationStatus=${redirectMessage}`);
+    } catch (error) {
+        console.error('Error verifying comment:', error);
+        res.redirect('/?verificationStatus=error');
     }
-
-    comment.status = 'pending';
-    comment.verified = true;
-    comment.verificationToken = undefined;
-    await comment.save();
-
-    // Notify admin about new verified comment
-    const adminMailOptions = {
-      from: env.email.user,
-      to: "angelram1@outlook.com",
-      subject: 'Nuevo comentario verificado en Dorichangos',
-      text: `Nuevo comentario verificado:\n\n${comment.content}\n\nEmail: ${comment.email}\n\nRevisa el panel de administración para aprobarlo o rechazarlo.`
-    };
-
-    await transporter.sendMail(adminMailOptions);
-
-    res.send('Comentario verificado exitosamente. Será revisado antes de ser publicado.');
-  } catch (error) {
-    console.error('Error verificando comentario:', error);
-    res.status(500).send('Error al verificar el comentario');
-  }
 });
+
 
 export default router

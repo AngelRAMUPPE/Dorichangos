@@ -172,6 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadMenuItems();
   loadCateringItems();
   loadEvents();
+  showVerificationMessage();
 });
 
 document.getElementById('commentForm').addEventListener('submit', async (e) => {
@@ -334,4 +335,60 @@ document.getElementById('checkoutBtn').addEventListener('click', async () => {
     
     // Redirigir a la página de pago
     window.location.href = '/checkout.html';
+});
+// Función para manejar mensajes de verificación
+function showVerificationMessage() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const status = urlParams.get('verificationStatus');
+  
+  if (!status) return;
+
+  const alert = document.getElementById('verificationAlert');
+  const message = alert.querySelector('.alert-message');
+  
+  let messageText = '';
+  let messageType = '';
+  
+  switch(status) {
+      case 'success':
+          messageText = '¡Comentario verificado exitosamente! Será revisado antes de ser publicado.';
+          messageType = 'success';
+          break;
+      case 'invalid':
+          messageText = 'El enlace de verificación es inválido o ha expirado.';
+          messageType = 'error';
+          break;
+      case 'error':
+          messageText = 'Ocurrió un error al verificar el comentario. Por favor intenta nuevamente.';
+          messageType = 'error';
+          break;
+  }
+  
+  if (messageText) {
+      message.textContent = messageText;
+      alert.className = `alert alert-${messageType}`;
+      alert.style.display = 'block';
+      
+      // Eliminar estado de verificación de URL sin recargar
+      window.history.replaceState({}, document.title, window.location.pathname);
+      
+      // Ocultar automáticamente después de 5 segundos
+      setTimeout(() => {
+          alert.style.animation = 'fadeOut 0.5s ease-out';
+          setTimeout(() => {
+              alert.style.display = 'none';
+              alert.style.animation = '';
+          }, 500);
+      }, 5000);
+  }
+}
+
+// Función de cierre del botón
+document.querySelector('.alert-close').addEventListener('click', function() {
+  const alert = document.getElementById('verificationAlert');
+  alert.style.animation = 'fadeOut 0.5s ease-out';
+  setTimeout(() => {
+      alert.style.display = 'none';
+      alert.style.animation = '';
+  }, 500);
 });
