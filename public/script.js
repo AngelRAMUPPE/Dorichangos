@@ -351,7 +351,7 @@ function showVerificationMessage() {
   
   switch(status) {
       case 'success':
-          messageText = '¡Comentario verificado exitosamente! Será revisado antes de ser publicado.';
+          messageText = '¡Comentario verificado exitosamente!';
           messageType = 'success';
           break;
       case 'invalid':
